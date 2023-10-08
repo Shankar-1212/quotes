@@ -3,13 +3,14 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import StoicismQuote
 from .serializers import StoicismQuoteSerializer
-import random
+from random import randint
 
 class RandomStoicismQuote(APIView):
     def get(self, request, format=None):
         try:
             # Get a random Stoicism quote
-            random_quote = StoicismQuote.objects.order_by('?').first()
+            x=randint(0, 10000)
+            random_quote = StoicismQuote.objects.all()[x]
             serializer = StoicismQuoteSerializer(random_quote)
             return Response(serializer.data)
         except StoicismQuote.DoesNotExist:
