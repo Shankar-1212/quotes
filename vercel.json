@@ -1,13 +1,14 @@
 {
-    "builds": [{
-        "src": "quotes_api/wsgi.py",
-        "use": "@vercel/python",
-        "config": { "maxLambdaSize": "15mb", "runtime": "python3.10" }
-    }],
+    "builds": [
+      {
+        "src": "quotesapi/wsgi.py",
+        "use": "@vercel/python"
+      }
+    ],
     "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "quotes_api/wsgi.py"
-        }
+      {
+        "src": "/(.*)",
+        "dest": "quotesapi/wsgi.py"
+      }
     ]
 }
