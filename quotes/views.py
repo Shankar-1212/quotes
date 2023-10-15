@@ -15,3 +15,5 @@ class RandomStoicismQuote(APIView):
             return Response(serializer.data)
         except StoicismQuote.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user.username, text=self.request.data['text'])
