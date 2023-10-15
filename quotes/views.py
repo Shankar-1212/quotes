@@ -15,5 +15,16 @@ class RandomStoicismQuote(APIView):
             return Response(serializer.data)
         except StoicismQuote.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
-    def perform_create(self, serializer):
-        serializer.save(author=self.request.user.username, text=self.request.data['text'])
+class StoicismQuoteCreateView(APIView):
+    def post(self, request, format=None):
+        author = request.data.get("author")
+        text = request.data.get("text")
+
+        if not author or not text:
+            return Response({"error": "Both 'author' and 'text' fields are required."}, status=status.HTTP_400_BAD_REQUEST)
+
+        stoicism_quote = StoicismQuote(author=author, text=text)
+        stoicism_quote.save()
+
+        serializer = StoicismQuoteSerializer(stoicism_quote)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
